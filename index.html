@@ -10,7 +10,7 @@
     <style>
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
 
-        /* Menu Inicial Rosa e Fofo */
+        /* Menu Inicial */
         #menu-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -25,9 +25,8 @@
             transition: opacity 0.8s ease;
         }
 
-        /* Sua Logotipo Shirubia no lugar do texto */
         #main-logo {
-            max-width: 400px; /* Tamanho da logo no menu */
+            max-width: 400px;
             height: auto;
             margin-bottom: 30px;
             filter: drop-shadow(0 5px 15px rgba(255, 182, 193, 0.8));
@@ -46,11 +45,6 @@
             transition: all 0.3s ease;
         }
 
-        .btn-start:hover {
-            background: #ff4d7d;
-            transform: scale(1.1);
-        }
-
         /* Área do Jogo */
         #game-container {
             position: relative;
@@ -59,17 +53,19 @@
             background-color: #2c1a1a;
             background-size: cover;
             background-position: center;
-            display: none; /* Escondido até o jogo começar */
+            display: none;
         }
 
+        /* AJUSTE DO SPRITE: Agora ele fica alinhado com o topo da caixa de diálogo */
         #character-sprite {
             position: absolute;
-            bottom: 0;
+            bottom: 180px; /* Posiciona acima da caixa de diálogo */
             left: 50%;
             transform: translateX(-50%);
-            height: 90%;
+            height: 70%; /* Ajuste para não cortar a cabeça */
             z-index: 5;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            pointer-events: none;
         }
 
         /* Caixa de Diálogo */
@@ -80,7 +76,7 @@
             transform: translateX(-50%);
             width: 85%;
             max-width: 900px;
-            min-height: 120px;
+            height: 150px;
             background: rgba(255, 255, 255, 0.95);
             border: 4px solid #ffb6cb;
             border-radius: 25px;
@@ -99,7 +95,6 @@
             left: 30px;
             font-weight: bold;
             font-size: 1.4em;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
         }
 
         #text-content {
@@ -113,7 +108,7 @@
 <body>
 
 <div id="menu-screen">
-    <img id="main-logo" src="assets/shirubia.png" alt="Shirubia a História de Maomao">
+    <img id="main-logo" src="assets/shirubia.png" alt="Shirubia">
     <button class="btn-start" onclick="startGame()">Começar Jogo</button>
 </div>
 
@@ -130,27 +125,24 @@
     const script = [
         {
             name: "Maomao",
-            text: "Finalmente terminei de organizar estas ervas. O cheiro de enxofre é relaxante, não acha?",
+            text: "Um novo dia no palácio... Por onde devo começar minhas pesquisas hoje?",
             sprite: "assets/maomaoidle.png",
-            bg: "https://placehold.co/1920x1080/f8d7da/521e23?text=QUARTO_DA_MAOMAO"
+            bg: "https://placehold.co/1920x1080/f8d7da/521e23?text=JARDIM_INTERNO",
+            style: "height: 85%; bottom: 180px;" // Corpo inteiro, pode ser maior
         },
         {
             name: "Maomao",
-            text: "Espere... esse brilho no corredor... Só pode ser ele.",
-            sprite: "assets/maomaoidle.png",
-            bg: "https://placehold.co/1920x1080/f8d7da/521e23?text=CORREDOR_DO_PALACIO"
-        },
-        {
-            name: "Maomao",
-            text: "Lá vem o Jinshi com aquele sorriso que atrai problemas. Que nojo...",
+            text: "Argh... o Jinshi está vindo para cá com aquele sorriso brilhante. Que nojo.",
             sprite: "assets/mamaonojo.png",
-            bg: "https://placehold.co/1920x1080/f8d7da/521e23?text=CORREDOR_DO_PALACIO"
+            bg: "https://placehold.co/1920x1080/f8d7da/521e23?text=CORREDOR",
+            style: "height: 55%; bottom: 175px;" // Meio corpo, ajustado para o balão
         },
         {
             name: "Maomao",
-            text: "O quê? Um novo veneno foi encontrado na sopa da concubina?! Deixe-me ver agora mesmo!",
+            text: "Espere... isso é um novo tipo de cogumelo venenoso?! Eu PRECISO ver isso de perto!",
             sprite: "assets/maomaoarisca.gif",
-            bg: "https://placehold.co/1920x1080/f8d7da/521e23?text=SALA_DE_PROVAS"
+            bg: "https://placehold.co/1920x1080/f8d7da/521e23?text=SALA_DE_PROVAS",
+            style: "height: 50%; bottom: 175px;" // Meio corpo
         }
     ];
 
@@ -168,13 +160,19 @@
     function nextStep() {
         if (currentStep < script.length) {
             const step = script[currentStep];
+            const spriteImg = document.getElementById('character-sprite');
+            
             document.getElementById('name-tag').innerText = step.name;
             document.getElementById('text-content').innerText = step.text;
-            document.getElementById('character-sprite').src = step.sprite;
+            spriteImg.src = step.sprite;
+            
+            // Aplica o ajuste de altura e posição específico para cada imagem
+            spriteImg.style = step.style;
+            
             document.getElementById('game-container').style.backgroundImage = `url('${step.bg}')`;
             currentStep++;
         } else {
-            alert("Continua no próximo capítulo!");
+            alert("Continua...");
             location.reload(); 
         }
     }
