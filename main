@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Maomao's Chronicles - Visual Novel</title>
+    <style>
+        body { margin: 0; background: #1a1a1a; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        #character-sprite {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 80%;
+            transition: all 0.3s ease;
+        }
+
+        #dialogue-box {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #cd7f32;
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #name-tag {
+            font-weight: bold;
+            color: #ffcc00;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        #text-content { line-height: 1.5; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <img id="character-sprite" src="" alt="[PLACEHOLDER_PERSONAGEM]">
+    
+    <div id="dialogue-box" onclick="nextStep()">
+        <div id="name-tag"></div>
+        <div id="text-content"></div>
+    </div>
+</div>
+
+<script>
+    const script = [
+        {
+            name: "Maomao",
+            text: "Mais um dia no Palácio de Cristal... Eu só queria testar esse novo fungo que encontrei.",
+            sprite: "https://placehold.co/400x600/2e4a31/white?text=MAOMAO_NEUTRA",
+            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
+        },
+        {
+            name: "???",
+            text: "Maomao! Finalmente te encontrei.",
+            sprite: "https://placehold.co/400x600/transparent/white?text=SEM_SPRITE",
+            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
+        },
+        {
+            name: "Jinshi",
+            text: "Tenho um novo caso para você. Envolve uma sopa de ninhos de andorinha suspeita...",
+            sprite: "https://placehold.co/400x600/6a4e8a/white?text=JINSHI_SORRISO",
+            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
+        },
+        {
+            name: "Maomao",
+            text: "Sopa suspeita? (Será que é veneno? Se for, eu preciso provar!)",
+            sprite: "https://placehold.co/400x600/2e4a31/white?text=MAOMAO_ANIMADA",
+            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
+        }
+    ];
+
+    let currentStep = 0;
+
+    function nextStep() {
+        if (currentStep < script.length) {
+            const step = script[currentStep];
+            document.getElementById('name-tag').innerText = step.name;
+            document.getElementById('text-content').innerText = step.text;
+            document.getElementById('character-sprite').src = step.sprite;
+            document.getElementById('game-container').style.backgroundImage = `url('${step.bg}')`;
+            currentStep++;
+        } else {
+            alert("Fim da demo!");
+            currentStep = 0;
+        }
+    }
+
+    // Iniciar o jogo
+    nextStep();
+</script>
+
+</body>
+</html>
