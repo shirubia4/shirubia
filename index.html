@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="assets/shirubia.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif; }
+        body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: sans-serif; }
         #menu-screen { 
             position: fixed; inset: 0; 
             background: url('assets/background.png') no-repeat center center;
@@ -29,42 +29,38 @@
             animation: float 4s ease-in-out infinite;
         }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        
         .btn-start { 
-            background: rgba(255, 255, 255, 0.2); 
+            background: rgba(26, 11, 46, 0.4); 
             color: #fff; 
-            border: 2px solid rgba(255, 255, 255, 0.5); 
+            border: 2px solid rgba(147, 112, 219, 0.5); 
             padding: 18px 60px; 
             font-size: 1.6rem; border-radius: 50px; cursor: pointer; font-weight: bold;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            transition: 0.4s; z-index: 102;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            transition: 0.3s; z-index: 102;
             text-transform: uppercase; letter-spacing: 2px;
         }
-        .btn-start:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.05); border-color: #fff; }
-
+        .btn-start:hover { background: rgba(46, 26, 71, 0.7); transform: scale(1.05); border-color: #bb99ff; }
         #game-container { position: relative; width: 100vw; height: 100vh; display: none; background-size: cover; background-position: center; }
         #character-sprite { position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; transition: 0.3s ease; }
-        
         #dialogue-box { 
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); 
             width: 90%; max-width: 950px; height: 160px; 
-            background: rgba(255, 255, 255, 0.15); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(15, 10, 25, 0.75); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(147, 112, 219, 0.3);
             border-radius: 25px; padding: 30px; cursor: pointer; z-index: 10; 
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.7);
         }
         #name-tag { 
-            background: rgba(255, 182, 203, 0.8); 
-            color: #fff; padding: 6px 30px; border-radius: 15px; 
+            background: rgba(46, 26, 71, 0.9); 
+            color: #e0bbff; padding: 6px 30px; border-radius: 12px; 
             position: absolute; top: -20px; left: 40px; 
             font-weight: bold; font-size: 1.4rem;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(147, 112, 219, 0.4);
         }
-        #text-content { font-size: 1.4rem; color: #fff; line-height: 1.4; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
+        #text-content { font-size: 1.4rem; color: #f0e6ff; line-height: 1.4; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
@@ -93,8 +89,8 @@
         container.appendChild(petal);
     }
     const script = [
-        { name: "Maomao", text: "Finalmente silêncio no meu quarto para organizar minhas ervas.", sprite: "assets/maomaoidle.png", bg: "assets/quartodamaomao.png", style: "height: 110%; bottom: -150px;" },
-        { name: "Jinshi", text: "Maomao! Finalmente te encontrei.", sprite: "assets/jinshi.png", bg: "assets/corredordopalácio.png", style: "height: 110%; bottom: -150px;" },
+        { name: "Maomao", text: "Finalmente silêncio no meu quarto para organizar minhas ervas.", sprite: "assets/maomaoidle.png", bg: "assets/quartodamaomao.png", style: "height: 115%; bottom: -180px;" },
+        { name: "Jinshi", text: "Maomao! Finalmente te encontrei.", sprite: "assets/jinshi.png", bg: "assets/corredordopalácio.png", style: "height: 115%; bottom: -180px;" },
         { name: "Maomao", text: "Lá vem ele com essa aura brilhante e irritante...", sprite: "assets/mamaonojo.png", bg: "assets/corredordopalácio.png", style: "height: 55%; bottom: 185px;" },
         { name: "Maomao", text: "Um veneno novo? Isso me interessa.", sprite: "assets/maomaoarisca.gif", bg: "assets/saladaservas.png", style: "height: 52%; bottom: 185px;" }
     ];
