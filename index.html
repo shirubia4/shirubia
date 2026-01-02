@@ -2,17 +2,68 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Maomao's Chronicles - Visual Novel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirubia a História de Maomao</title>
     <style>
-        body { margin: 0; background: #1a1a1a; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-        
+        /* Estilos Gerais */
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        /* Tela de Menu (Rosa e Fofa) */
+        #menu-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff0f5; /* Rosa bem clarinho */
+            background-image: radial-gradient(#ffc0cb 1px, transparent 1px);
+            background-size: 20px 20px; /* Pontinhos fofos ao fundo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.8s ease;
+        }
+
+        #game-logo {
+            max-width: 250px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 5px 15px rgba(255, 182, 193, 0.6));
+        }
+
+        h1 {
+            color: #d147a3;
+            font-size: 2.5em;
+            text-shadow: 2px 2px white;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .btn-start {
+            background: #ff85a2;
+            color: white;
+            border: 4px solid #ffffff;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 50px; /* Bem arredondado */
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-start:hover {
+            background: #ff4d7d;
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(255, 77, 125, 0.4);
+        }
+
+        /* Container do Jogo (Fica atrás do menu) */
         #game-container {
             position: relative;
             width: 100vw;
             height: 100vh;
+            background: #2c1a1a;
             background-size: cover;
             background-position: center;
-            transition: background-image 0.5s ease-in-out;
         }
 
         #character-sprite {
@@ -20,43 +71,61 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            height: 80%;
-            transition: all 0.3s ease;
+            height: 85%;
+            z-index: 5;
         }
 
+        /* Caixa de Diálogo Estilizada */
         #dialogue-box {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80%;
-            height: 150px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #cd7f32;
-            border-radius: 10px;
-            padding: 20px;
-            color: white;
+            width: 85%;
+            max-width: 900px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 4px solid #ffb6cb;
+            border-radius: 25px;
+            padding: 25px;
             cursor: pointer;
+            z-index: 10;
         }
 
         #name-tag {
+            background: #ffb6cb;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 15px;
+            position: absolute;
+            top: -20px;
+            left: 30px;
             font-weight: bold;
-            color: #ffcc00;
-            font-size: 1.2em;
-            margin-bottom: 10px;
+            font-size: 1.3em;
         }
 
-        #text-content { line-height: 1.5; font-size: 1.1em; }
+        #text-content {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.4;
+        }
+
     </style>
 </head>
 <body>
 
+<div id="menu-screen">
+    <img id="game-logo" src="assets/logo.png" alt="[LOGO]">
+    <h1>Shirubia a História de Maomao</h1>
+    <button class="btn-start" onclick="startGame()">Começar Jogo</button>
+</div>
+
 <div id="game-container">
-    <img id="character-sprite" src="" alt="[PLACEHOLDER_PERSONAGEM]">
+    <img id="character-sprite" src="" alt="">
     
     <div id="dialogue-box" onclick="nextStep()">
         <div id="name-tag"></div>
-        <div id="text-content"></div>
+        <div id="text-content">Clique para começar...</div>
     </div>
 </div>
 
@@ -64,31 +133,28 @@
     const script = [
         {
             name: "Maomao",
-            text: "Mais um dia no Palácio de Cristal... Eu só queria testar esse novo fungo que encontrei.",
+            text: "Um novo dia no palácio... os jardins estão cheios de ervas interessantes hoje.",
             sprite: "https://placehold.co/400x600/2e4a31/white?text=MAOMAO_NEUTRA",
-            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
-        },
-        {
-            name: "???",
-            text: "Maomao! Finalmente te encontrei.",
-            sprite: "https://placehold.co/400x600/transparent/white?text=SEM_SPRITE",
-            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
+            bg: "https://placehold.co/1920x1080/ffeffa/white?text=JARDIM_DO_PALACIO"
         },
         {
             name: "Jinshi",
-            text: "Tenho um novo caso para você. Envolve uma sopa de ninhos de andorinha suspeita...",
+            text: "Maomao! O que faz agachada no meio do mato de novo?",
             sprite: "https://placehold.co/400x600/6a4e8a/white?text=JINSHI_SORRISO",
-            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
-        },
-        {
-            name: "Maomao",
-            text: "Sopa suspeita? (Será que é veneno? Se for, eu preciso provar!)",
-            sprite: "https://placehold.co/400x600/2e4a31/white?text=MAOMAO_ANIMADA",
-            bg: "https://placehold.co/1920x1080/4a3b2e/white?text=QUARTO_DA_MAOMAO"
+            bg: "https://placehold.co/1920x1080/ffeffa/white?text=JARDIM_DO_PALACIO"
         }
     ];
 
     let currentStep = 0;
+
+    function startGame() {
+        const menu = document.getElementById('menu-screen');
+        menu.style.opacity = '0';
+        setTimeout(() => {
+            menu.style.display = 'none';
+            nextStep();
+        }, 800);
+    }
 
     function nextStep() {
         if (currentStep < script.length) {
@@ -99,13 +165,10 @@
             document.getElementById('game-container').style.backgroundImage = `url('${step.bg}')`;
             currentStep++;
         } else {
-            alert("Fim da demo!");
-            currentStep = 0;
+            alert("Fim do capítulo!");
+            location.reload(); // Volta para o menu
         }
     }
-
-    // Iniciar o jogo
-    nextStep();
 </script>
 
 </body>
